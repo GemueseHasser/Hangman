@@ -1,4 +1,4 @@
-package de.jonas.hangman;
+package de.jonas.hangman.constant;
 
 import lombok.Getter;
 import lombok.Setter;

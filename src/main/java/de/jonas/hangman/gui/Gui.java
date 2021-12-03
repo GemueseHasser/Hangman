@@ -1,5 +1,6 @@
-package de.jonas.hangman;
+package de.jonas.hangman.gui;
 
+import de.jonas.hangman.object.Draw;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.JFrame;

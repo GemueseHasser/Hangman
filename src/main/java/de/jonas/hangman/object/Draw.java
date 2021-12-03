@@ -1,5 +1,7 @@
-package de.jonas.hangman;
+package de.jonas.hangman.object;
 
+import de.jonas.hangman.gui.Gui;
+import de.jonas.hangman.constant.HangmanElementType;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.JLabel;

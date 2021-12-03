@@ -1,6 +1,6 @@
 package de.jonas;
 
-import de.jonas.hangman.Gui;
+import de.jonas.hangman.gui.Gui;
 import org.jetbrains.annotations.NotNull;
 
 /**
