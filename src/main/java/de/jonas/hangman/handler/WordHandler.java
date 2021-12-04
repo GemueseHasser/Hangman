@@ -71,6 +71,9 @@ public final class WordHandler {
      * @param digit Der Buchstabe, welcher überprüft bzw. gedrückt wird.
      */
     public void press(final char digit) {
+        // check if the current char is a letter
+        if (!Character.isLetter(digit)) return;
+
         assert this.wordType != null;
         final Integer position = this.wordType.getPosition(digit);
 

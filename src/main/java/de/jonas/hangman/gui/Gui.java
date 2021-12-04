@@ -65,8 +65,6 @@ public final class Gui extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(final KeyEvent keyEvent) {
-        if (!Character.isLetter(keyEvent.getKeyCode())) return;
-
         Hangman.getWordHandler().press(keyEvent.getKeyChar());
     }
 
