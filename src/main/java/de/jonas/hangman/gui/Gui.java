@@ -58,6 +58,7 @@ public final class Gui extends JFrame implements KeyListener {
         super.setVisible(true);
     }
 
+    //<editor-fold desc="implementation">
     @Override
     public void keyTyped(final KeyEvent keyEvent) {
 
@@ -72,4 +73,5 @@ public final class Gui extends JFrame implements KeyListener {
     public void keyReleased(final KeyEvent keyEvent) {
 
     }
+    //</editor-fold>
 }

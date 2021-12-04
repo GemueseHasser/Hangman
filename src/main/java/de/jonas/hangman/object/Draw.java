@@ -19,12 +19,16 @@ import java.awt.RenderingHints;
 public final class Draw extends JLabel {
 
     //<editor-fold desc="CONSTANTS">
+    private static final int HANGMAN_RECT_X = 80;
+    private static final int HANGMAN_RECT_Y = 80;
+    private static final int HANGMAN_RECT_WIDTH = 200;
+    private static final int HANGMAN_RECT_HEIGHT = 250;
     /** Die Basis X-Koordinate des Galgenmännchens. */
-    private static final int HANGMAN_BASE_X = 200;
+    private static final int HANGMAN_BASE_X = 100;
     /** Die Basis Y-Koordinate des Galgenmännchens. */
-    private static final int HANGMAN_BASE_Y = 350;
+    private static final int HANGMAN_BASE_Y = 300;
     /** Die X-Koordinate des Wortes. */
-    private static final int WORD_BASE_X = 200;
+    private static final int WORD_BASE_X = 240;
     /** Die Y-Koordinate des Wortes. */
     private static final int WORD_BASE_Y = 400;
     //</editor-fold>
@@ -47,6 +51,24 @@ public final class Draw extends JLabel {
         // set default color
         g.setColor(Color.BLACK);
 
+        // draw hangman surrounding rect
+        g.drawRect(
+            HANGMAN_RECT_X,
+            HANGMAN_RECT_Y,
+            HANGMAN_RECT_WIDTH,
+            HANGMAN_RECT_HEIGHT
+        );
+
+        // draw current word
+        Hangman.getWordHandler().draw(
+            WORD_BASE_X,
+            WORD_BASE_Y,
+            g
+        );
+
+        // set hangman color
+        g.setColor(Color.RED);
+
         // draw current hangman
         for (@NotNull final HangmanElementType element : HangmanElementType.values()) {
             if (!element.isActive()) continue;
@@ -57,13 +79,6 @@ public final class Draw extends JLabel {
                 g
             );
         }
-
-        // draw current word
-        Hangman.getWordHandler().draw(
-            WORD_BASE_X,
-            WORD_BASE_Y,
-            g
-        );
 
         repaint();
     }
