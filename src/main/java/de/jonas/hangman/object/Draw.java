@@ -1,5 +1,6 @@
 package de.jonas.hangman.object;
 
+import de.jonas.Hangman;
 import de.jonas.hangman.gui.Gui;
 import de.jonas.hangman.constant.HangmanElementType;
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +23,10 @@ public final class Draw extends JLabel {
     private static final int HANGMAN_BASE_X = 200;
     /** Die Basis Y-Koordinate des Galgenmännchens. */
     private static final int HANGMAN_BASE_Y = 350;
+    /** Die X-Koordinate des Wortes. */
+    private static final int WORD_BASE_X = 200;
+    /** Die Y-Koordinate des Wortes. */
+    private static final int WORD_BASE_Y = 400;
     //</editor-fold>
 
 
@@ -52,6 +57,13 @@ public final class Draw extends JLabel {
                 g
             );
         }
+
+        // draw current word
+        Hangman.getWordHandler().draw(
+            WORD_BASE_X,
+            WORD_BASE_Y,
+            g
+        );
 
         repaint();
     }

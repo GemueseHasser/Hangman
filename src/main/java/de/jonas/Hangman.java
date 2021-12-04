@@ -1,6 +1,8 @@
 package de.jonas;
 
 import de.jonas.hangman.gui.Gui;
+import de.jonas.hangman.handler.WordHandler;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -11,6 +13,13 @@ import org.jetbrains.annotations.NotNull;
 @NotNull
 public final class Hangman {
 
+    //<editor-fold desc="STATIC FIELDS">
+    /** Der {@link WordHandler}, womit ein Wort generiert wird und angezeigt werden kann. */
+    @Getter
+    private static WordHandler wordHandler;
+    //</editor-fold>
+
+
     //<editor-fold desc="main">
 
     /**
@@ -20,6 +29,10 @@ public final class Hangman {
      * @param args Die Argumente, die von der JRE übergeben wurden.
      */
     public static void main(@NotNull final String[] args) {
+        // declare word handler
+        wordHandler = new WordHandler();
+
+        // initialize and open gui
         final Gui gui = new Gui();
         gui.open();
     }

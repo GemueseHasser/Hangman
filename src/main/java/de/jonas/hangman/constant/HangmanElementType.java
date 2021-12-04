@@ -164,7 +164,7 @@ public enum HangmanElementType {
     /**
      * Aktiviert das nächste {@link HangmanElementType}, sodass es gezeichnet wird.
      */
-    public static void activeNextElement() {
+    public static void activateNextElement() {
         for (@NotNull final HangmanElementType element : HangmanElementType.values()) {
             if (element.isActive()) continue;
 
