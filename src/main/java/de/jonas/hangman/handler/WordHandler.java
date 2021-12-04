@@ -2,6 +2,7 @@ package de.jonas.hangman.handler;
 
 import de.jonas.hangman.constant.HangmanElementType;
 import de.jonas.hangman.constant.WordType;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
@@ -36,6 +37,10 @@ public final class WordHandler {
     /** Eine Liste aller gefundenen Buchstaben bzw dessen Plätze im Wort. */
     @NotNull
     private final List<Integer> founded = new ArrayList<>();
+    /** Eine Liste, die alle falschen (schon erratenen) Buchstaben enthält. */
+    @Getter
+    @NotNull
+    private final List<Character> falseLetters = new ArrayList<>();
     /** Der aktuelle {@link WordType}, auf welchem dieser {@link WordHandler} basiert. */
     @Nullable
     private WordType wordType;
@@ -71,14 +76,17 @@ public final class WordHandler {
      * @param digit Der Buchstabe, welcher überprüft bzw. gedrückt wird.
      */
     public void press(final char digit) {
-        // check if the current char is a letter
-        if (!Character.isLetter(digit)) return;
+        // check if the current char is a letter or if the current char is already clicked
+        if (!Character.isLetter(digit) || this.falseLetters.contains(digit)) return;
 
         assert this.wordType != null;
         final Integer position = this.wordType.getPosition(digit);
 
         // check if char is preset in word
         if (position == null) {
+            // add current digit to false letters
+            this.falseLetters.add(digit);
+
             // add hangman element
             HangmanElementType.activateNextElement();
             return;

@@ -19,18 +19,43 @@ import java.awt.RenderingHints;
 public final class Draw extends JLabel {
 
     //<editor-fold desc="CONSTANTS">
+
+    //<editor-fold desc="hangman rect">
+    /** Die X-Koordinate des Vierecks, welches um das Galgenmännchen gezeichnet wird. */
     private static final int HANGMAN_RECT_X = 80;
+    /** Die Y-Koordinate des Vierecks, welches um das Galgenmännchen gezeichnet wird. */
     private static final int HANGMAN_RECT_Y = 80;
+    /** Die Breite des Vierecks, welches um das Galgenmännchen gezeichnet wird. */
     private static final int HANGMAN_RECT_WIDTH = 200;
+    /** Die Höhe des Vierecks, welches um das Galgenmännchen gezeichnet wird. */
     private static final int HANGMAN_RECT_HEIGHT = 250;
+    //</editor-fold>
+
+    //<editor-fold desc="false letters">
+    /** Die X-Koordinate, ab wo angefangen wird, die falsch erratenen Buchstaben anzuzeigen. */
+    private static final int FALSE_LETTERS_X = 350;
+    /** Die Y-Koordinate, ab wo angefangen wird, die falsch erratenen Buchstaben anzuzeigen. */
+    private static final int FALSE_LETTERS_Y = 100;
+    /** Der Abstand zwischen den einzelnen falsch erratenen Buchstaben. */
+    private static final int FALSE_LETTER_MARGIN = 30;
+    /** DIe Anzahl an falsch erratenen Buchstaben, die in einer Zeile angezeigt werden. */
+    private static final int FALSE_LETTERS_PER_LINE = 5;
+    //</editor-fold>
+
+    //<editor-fold desc="hangman">
     /** Die Basis X-Koordinate des Galgenmännchens. */
     private static final int HANGMAN_BASE_X = 100;
     /** Die Basis Y-Koordinate des Galgenmännchens. */
     private static final int HANGMAN_BASE_Y = 300;
+    //</editor-fold>
+
+    //<editor-fold desc="word">
     /** Die X-Koordinate des Wortes. */
     private static final int WORD_BASE_X = 240;
     /** Die Y-Koordinate des Wortes. */
     private static final int WORD_BASE_Y = 400;
+    //</editor-fold>
+
     //</editor-fold>
 
 
@@ -78,6 +103,22 @@ public final class Draw extends JLabel {
                 HANGMAN_BASE_Y,
                 g
             );
+        }
+
+        // draw false letters
+        for (int i = 0; i < Hangman.getWordHandler().getFalseLetters().size(); i++) {
+            // get current letter
+            final char letter = Hangman.getWordHandler().getFalseLetters().get(i);
+
+            // calculate x coordinate of current letter
+            final int x = (FALSE_LETTERS_X + i * FALSE_LETTER_MARGIN)
+                - ((i / FALSE_LETTERS_PER_LINE) * (FALSE_LETTERS_PER_LINE * FALSE_LETTER_MARGIN));
+
+            // calculate y coordinate of current letter
+            final int y = FALSE_LETTERS_Y + ((i / FALSE_LETTERS_PER_LINE) * FALSE_LETTER_MARGIN);
+
+            // draw current letter
+            g.drawString(String.valueOf(letter), x, y);
         }
 
         repaint();
