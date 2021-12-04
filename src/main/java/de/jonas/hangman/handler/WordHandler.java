@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * Mithilfe eines {@link WordHandler} lässt sich ein bestimmter {@link WordType} verarbeiten. Bei der Instanziierung des
@@ -33,6 +34,8 @@ public final class WordHandler {
     /** Die Schriftart, mit der ein Wort geschrieben wird. */
     @NotNull
     private static final Font WORD_FONT = new Font("Arial", Font.BOLD, 20);
+    /** Die Größe (Breite) einer Linie, die bei einem noch nicht erratenen Buchstaben angezeigt wird. */
+    private static final int LETTER_LINE_SIZE = 25;
     //</editor-fold>
 
 
@@ -45,6 +48,7 @@ public final class WordHandler {
     @NotNull
     private final List<Character> falseLetters = new ArrayList<>();
     /** Der aktuelle {@link WordType}, auf welchem dieser {@link WordHandler} basiert. */
+    @Getter
     @Nullable
     private WordType wordType;
     //</editor-fold>
@@ -97,16 +101,18 @@ public final class WordHandler {
         if (!Character.isLetter(digit) || this.falseLetters.contains(digit)) return;
 
         assert this.wordType != null;
-        final Integer position = this.wordType.getPosition(digit);
+        final Set<Integer> positions = this.wordType.getPositions(digit);
 
         // check if letter is already found
-        if (this.founded.contains(position)) return;
+        for (@Range(from = 0, to = Integer.MAX_VALUE) final int position : positions) {
+            if (this.founded.contains(position)) return;
+        }
 
         // check if current word is full
         if (isWordFull()) return;
 
         // check if char is preset in word
-        if (position == null) {
+        if (positions.isEmpty()) {
             // add current digit to false letters
             this.falseLetters.add(digit);
 
@@ -135,7 +141,7 @@ public final class WordHandler {
         }
 
         // found
-        founded.add(position);
+        founded.addAll(positions);
 
         // check if player has won
         if (isWordFull()) {
@@ -180,8 +186,18 @@ public final class WordHandler {
                 continue;
             }
 
-            g.drawLine(x, baseY, x + 25, baseY);
+            g.drawLine(x, baseY, x + LETTER_LINE_SIZE, baseY);
         }
+    }
+
+    /**
+     * Berechnet die Breite des aktuellen Wortes.
+     *
+     * @return Die Breite des aktuellen Wortes.
+     */
+    public int getWidth() {
+        assert this.wordType != null;
+        return this.wordType.getWord().length() * LETTER_LINE_SIZE;
     }
 
 }

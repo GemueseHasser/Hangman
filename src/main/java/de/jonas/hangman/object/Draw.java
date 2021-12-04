@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.JLabel;
 
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -50,8 +51,6 @@ public final class Draw extends JLabel {
     //</editor-fold>
 
     //<editor-fold desc="word">
-    /** Die X-Koordinate des Wortes. */
-    private static final int WORD_BASE_X = 240;
     /** Die Y-Koordinate des Wortes. */
     private static final int WORD_BASE_Y = 400;
     //</editor-fold>
@@ -86,7 +85,7 @@ public final class Draw extends JLabel {
 
         // draw current word
         Hangman.getWordHandler().draw(
-            WORD_BASE_X,
+            (super.getWidth() / 2) - (Hangman.getWordHandler().getWidth() / 2),
             WORD_BASE_Y,
             g
         );
