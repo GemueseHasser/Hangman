@@ -17,8 +17,25 @@ public enum WordType {
     TREE(
         "Baum"
     ),
+    /** Der {@link WordType} für das Wort 'Baustelle'. */
     CONSTRUCTION_ZONE(
-        "Baustelle mit"
+        "Baustelle"
+    ),
+    /** Der {@link WordType} für das Wort 'Schule'. */
+    SCHOOL(
+        "Schule"
+    ),
+    /** Der {@link WordType} für das Wort 'Schwieriges Wort'. */
+    BAD_WORD(
+        "Schwieriges Wort"
+    ),
+    /** Der {@link WordType} für das Wort 'Galgenmännchen'. */
+    Hangman(
+        "Galgenmännchen"
+    ),
+    /** Der {@link WordType} für das Wort 'Wort'. */
+    WORD(
+        "Wort"
     );
     //</editor-fold>
 
