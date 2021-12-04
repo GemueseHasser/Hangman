@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Ein {@link WordType} spiegelt ein Wort wieder, welches in diesem Spiel nach und nach erraten werden muss.
  */
+@NotNull
 public enum WordType {
 
     //<editor-fold desc="VALUES">

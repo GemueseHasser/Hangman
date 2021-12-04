@@ -11,6 +11,7 @@ import java.util.Arrays;
 /**
  * Ein {@link HangmanElementType} ist ein bestimmtes Element (ein Bestandteil) des gesamten visuellen Galgenmännchens.
  */
+@NotNull
 public enum HangmanElementType {
 
     //<editor-fold desc="VALUES">

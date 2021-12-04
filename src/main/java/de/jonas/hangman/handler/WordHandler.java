@@ -3,6 +3,7 @@ package de.jonas.hangman.handler;
 import de.jonas.hangman.constant.HangmanElementType;
 import de.jonas.hangman.constant.WordType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 
 import java.awt.Font;
@@ -10,6 +11,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -17,20 +19,25 @@ import java.util.Random;
  * {@link WordHandler} wird ein zufälliger {@link WordType} ausgewählt, auf dessen Grundlage dieser Handler dann
  * arbeitet. Der {@link WordType} kann beliebig oft neu generiert werden.
  */
+@NotNull
 public final class WordHandler {
 
     //<editor-fold desc="CONSTANTS">
     /** Der {@link Random}, mit dem der zufällige {@link WordType} kalkuliert wird. */
+    @NotNull
     private static final Random RANDOM = new Random();
     /** Die Schriftart, mit der ein Wort geschrieben wird. */
+    @NotNull
     private static final Font WORD_FONT = new Font("Arial", Font.BOLD, 20);
     //</editor-fold>
 
 
     //<editor-fold desc="LOCAL FIELDS">
     /** Eine Liste aller gefundenen Buchstaben bzw dessen Plätze im Wort. */
+    @NotNull
     private final List<Integer> founded = new ArrayList<>();
     /** Der aktuelle {@link WordType}, auf welchem dieser {@link WordHandler} basiert. */
+    @Nullable
     private WordType wordType;
     //</editor-fold>
 
@@ -64,6 +71,7 @@ public final class WordHandler {
      * @param digit Der Buchstabe, welcher überprüft bzw. gedrückt wird.
      */
     public void press(final char digit) {
+        assert this.wordType != null;
         final Integer position = this.wordType.getPosition(digit);
 
         // check if char is preset in word
@@ -92,7 +100,7 @@ public final class WordHandler {
     ) {
         g.setFont(WORD_FONT);
 
-        for (int i = 0; i < this.wordType.getWord().length(); i++) {
+        for (int i = 0; i < Objects.requireNonNull(this.wordType).getWord().length(); i++) {
             final int x = baseX + i * 30;
 
             if (founded.contains(i)) {
