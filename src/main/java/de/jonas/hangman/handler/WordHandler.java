@@ -83,11 +83,11 @@ public final class WordHandler {
     /**
      * Überprüft, ob das aktuelle Wort vollständig erraten wurde.
      *
-     * @return Wenn das aktuelle Wort vollständig erraten wurde, {@code true}, aonsonsten {@code false}.
+     * @return Wenn das aktuelle Wort vollständig erraten wurde, {@code true}, ansonsten {@code false}.
      */
     public boolean isWordFull() {
         assert this.wordType != null;
-        return this.founded.size() == this.wordType.getWord().length();
+        return this.founded.size() == this.wordType.getWord().replaceAll("\\s", "").length();
     }
 
     /**
@@ -116,7 +116,7 @@ public final class WordHandler {
             // add current digit to false letters
             this.falseLetters.add(digit);
 
-            // add hangman element
+            // append hangman element
             HangmanElementType.activateNextElement();
 
             // check if player has lost
@@ -185,6 +185,8 @@ public final class WordHandler {
                 g.drawString(String.valueOf(wordType.getWord().charAt(i)), x, baseY);
                 continue;
             }
+
+            if (wordType.getWord().charAt(i) == ' ') continue;
 
             g.drawLine(x, baseY, x + LETTER_LINE_SIZE, baseY);
         }
