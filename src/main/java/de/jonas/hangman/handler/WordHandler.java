@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Mithilfe eines {@link WordHandler} lässt sich ein bestimmter {@link WordType} verarbeiten. Bei der Instanziierung des
@@ -47,6 +48,9 @@ public final class WordHandler {
     @Getter
     @NotNull
     private final List<Character> falseLetters = new ArrayList<>();
+    /** Eine Liste, die alle {@link WordType Typen} beinhaltet, die schon genutzt wurden. */
+    @NotNull
+    private final List<WordType> usedWordTypes = new ArrayList<>();
     /** Der aktuelle {@link WordType}, auf welchem dieser {@link WordHandler} basiert. */
     @Getter
     @Nullable
@@ -76,14 +80,30 @@ public final class WordHandler {
         this.founded.clear();
         this.falseLetters.clear();
 
-        // set random word type but cancel using of one type twice
-        WordType newType = this.wordType;
+        // get available word types
+        final List<WordType> availableWordTypes = Arrays
+            .stream(WordType.values())
+            .filter(type -> !usedWordTypes.contains(type))
+            .collect(Collectors.toList());
 
-        while (newType == this.wordType) {
-            newType = Arrays.asList(WordType.values()).get(RANDOM.nextInt(WordType.values().length));
+        // check if all word types are used
+        if (availableWordTypes.isEmpty()) {
+            // mark all types as unused
+            this.usedWordTypes.clear();
+
+            // regenerate word type
+            generateWordType();
+            return;
         }
 
-        this.wordType = newType;
+        // generate word type
+        final WordType generatedWordType = availableWordTypes.get(RANDOM.nextInt(availableWordTypes.size()));
+
+        // mark new word type as used
+        this.usedWordTypes.add(generatedWordType);
+
+        // set word type
+        this.wordType = generatedWordType;
     }
 
     /**

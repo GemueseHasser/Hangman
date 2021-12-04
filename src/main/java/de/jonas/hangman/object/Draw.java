@@ -1,14 +1,13 @@
 package de.jonas.hangman.object;
 
 import de.jonas.Hangman;
-import de.jonas.hangman.gui.Gui;
 import de.jonas.hangman.constant.HangmanElementType;
+import de.jonas.hangman.gui.Gui;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.JLabel;
 
 import java.awt.Color;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
