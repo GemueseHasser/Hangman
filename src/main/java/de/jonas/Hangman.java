@@ -40,6 +40,9 @@ public final class Hangman {
     //</editor-fold>
 
 
+    /**
+     * Setzt das Spiel zurück.
+     */
     public static void resetGame() {
         // regenerate word type
         wordHandler.generateWordType();
