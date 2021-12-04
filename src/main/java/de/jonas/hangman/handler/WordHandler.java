@@ -76,8 +76,14 @@ public final class WordHandler {
         this.founded.clear();
         this.falseLetters.clear();
 
-        // set random word type
-        this.wordType = Arrays.asList(WordType.values()).get(RANDOM.nextInt(WordType.values().length));
+        // set random word type but cancel using of one type twice
+        WordType newType = this.wordType;
+
+        while (newType == this.wordType) {
+            newType = Arrays.asList(WordType.values()).get(RANDOM.nextInt(WordType.values().length));
+        }
+
+        this.wordType = newType;
     }
 
     /**
