@@ -1,16 +1,20 @@
 package de.jonas.hangman.gui;
 
+import de.jonas.Hangman;
 import de.jonas.hangman.object.Draw;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.JFrame;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Ein {@link Gui} ist das Fenster, auf dem das Spiel angezeigt wird. Das gesamte Spiel wird allerdings mithilfe des
  * {@link Draw} auf dieses Fenster gezeichnet.
  */
 @NotNull
-public final class Gui extends JFrame {
+public final class Gui extends JFrame implements KeyListener {
 
     //<editor-fold desc="CONSTANTS">
     /** Der Titel dieses Fensters. */
@@ -36,6 +40,7 @@ public final class Gui extends JFrame {
         super.setBounds(0, 0, WIDTH, HEIGHT);
         super.setLocationRelativeTo(null);
         super.setResizable(false);
+        super.addKeyListener(this);
 
         final Draw draw = new Draw();
         draw.setBounds(0, 0, WIDTH, HEIGHT);
@@ -53,4 +58,20 @@ public final class Gui extends JFrame {
         super.setVisible(true);
     }
 
+    @Override
+    public void keyTyped(final KeyEvent keyEvent) {
+
+    }
+
+    @Override
+    public void keyPressed(final KeyEvent keyEvent) {
+        if (!Character.isLetter(keyEvent.getKeyCode())) return;
+
+        Hangman.getWordHandler().press(keyEvent.getKeyChar());
+    }
+
+    @Override
+    public void keyReleased(final KeyEvent keyEvent) {
+
+    }
 }
