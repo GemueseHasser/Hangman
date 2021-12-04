@@ -162,6 +162,7 @@ public enum HangmanElementType {
 
 
     //<editor-fold desc="utility">
+
     /**
      * Aktiviert das nächste {@link HangmanElementType}, sodass es gezeichnet wird.
      */
@@ -172,6 +173,15 @@ public enum HangmanElementType {
             element.setActive(true);
             return;
         }
+    }
+
+    /**
+     * Deaktiviert alle {@link HangmanElementType Elemente}.
+     */
+    public static void deactivateAll() {
+        Arrays
+            .stream(HangmanElementType.values())
+            .forEach(element -> element.setActive(false));
     }
 
     /**

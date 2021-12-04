@@ -1,11 +1,14 @@
 package de.jonas.hangman.handler;
 
+import de.jonas.Hangman;
 import de.jonas.hangman.constant.HangmanElementType;
 import de.jonas.hangman.constant.WordType;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
+
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Graphics;
@@ -65,8 +68,22 @@ public final class WordHandler {
      * Generiert einen neuen {@link WordType} bzw schafft diesem {@link WordHandler} eine neue Grundlage.
      */
     public void generateWordType() {
+        // clear lists
         this.founded.clear();
+        this.falseLetters.clear();
+
+        // set random word type
         this.wordType = Arrays.asList(WordType.values()).get(RANDOM.nextInt(WordType.values().length));
+    }
+
+    /**
+     * Überprüft, ob das aktuelle Wort vollständig erraten wurde.
+     *
+     * @return Wenn das aktuelle Wort vollständig erraten wurde, {@code true}, aonsonsten {@code false}.
+     */
+    public boolean isWordFull() {
+        assert this.wordType != null;
+        return this.founded.size() == this.wordType.getWord().length();
     }
 
     /**
@@ -82,6 +99,12 @@ public final class WordHandler {
         assert this.wordType != null;
         final Integer position = this.wordType.getPosition(digit);
 
+        // check if letter is already found
+        if (this.founded.contains(position)) return;
+
+        // check if current word is full
+        if (isWordFull()) return;
+
         // check if char is preset in word
         if (position == null) {
             // add current digit to false letters
@@ -89,11 +112,49 @@ public final class WordHandler {
 
             // add hangman element
             HangmanElementType.activateNextElement();
+
+            // check if player has lost
+            if (HangmanElementType.allActive()) {
+                final int playOption = JOptionPane.showConfirmDialog(
+                    null,
+                    "Du hast leider verloren! \nMöchtest du erneut spielen?",
+                    "Schade!",
+                    JOptionPane.YES_NO_OPTION
+                );
+
+                // check if player wants to play again
+                if (playOption == JOptionPane.YES_OPTION) {
+                    Hangman.resetGame();
+                    return;
+                }
+
+                // close game
+                System.exit(0);
+            }
             return;
         }
 
         // found
         founded.add(position);
+
+        // check if player has won
+        if (isWordFull()) {
+            final int playOption = JOptionPane.showConfirmDialog(
+                null,
+                "Du has gewonnen! \nMöchtest du erneut spielen?",
+                "Glückwunsch!",
+                JOptionPane.YES_NO_OPTION
+            );
+
+            // check if player wants to play again
+            if (playOption == JOptionPane.YES_OPTION) {
+                Hangman.resetGame();
+                return;
+            }
+
+            // close game
+            System.exit(0);
+        }
     }
 
     /**

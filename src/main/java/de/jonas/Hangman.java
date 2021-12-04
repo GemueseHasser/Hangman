@@ -1,5 +1,6 @@
 package de.jonas;
 
+import de.jonas.hangman.constant.HangmanElementType;
 import de.jonas.hangman.gui.Gui;
 import de.jonas.hangman.handler.WordHandler;
 import lombok.Getter;
@@ -37,5 +38,14 @@ public final class Hangman {
         gui.open();
     }
     //</editor-fold>
+
+
+    public static void resetGame() {
+        // regenerate word type
+        wordHandler.generateWordType();
+
+        // reset hangman
+        HangmanElementType.deactivateAll();
+    }
 
 }
